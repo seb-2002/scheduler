@@ -10,11 +10,6 @@ export default function useApplicationData() {
   });
 
   const setDay = (day) => setState({ ...state, day: day });
-  // const setDays = (days) => setState((prev) => ({ ...prev, days: [...days] }));
-  // const setAppointments = (appointments) =>
-  //   setState((prev) => ({ ...prev, appointments: { ...appointments } }));
-  // const setInterviewers = (interviewers) =>
-  //   setState((prev) => ({ ...prev, interviewers: { ...interviewers } }));
 
   function bookInterview(id, interview) {
     const appointment = {
