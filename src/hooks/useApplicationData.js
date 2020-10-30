@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import { countInterviews } from "../helpers/selectors";
+
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: "Monday",
@@ -49,9 +51,27 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    const thisDay = state.days.find((dayEntry) =>
+      dayEntry.appointments.includes(id)
+    );
+
+    const updatedDay = {
+      ...thisDay,
+      spots: thisDay.spots - 1,
+    };
+
+    const updatedDays = state.days.map((day) => {
+      if (day.id === updatedDay.id) {
+        return updatedDay;
+      } else {
+        return day;
+      }
+    });
+
     const newState = {
       ...state,
       appointments,
+      days: updatedDays,
     };
 
     const deleteData = axios.delete(
@@ -66,6 +86,30 @@ export default function useApplicationData() {
     });
 
     return deleteData;
+  }
+
+  const remainingSpots = countInterviews(state, state.day);
+  console.log(remainingSpots);
+
+  function updateSpots(number, dayId) {
+    const day = {
+      ...state.days[dayId],
+      spots: number,
+    };
+
+    const days = {
+      ...state.days,
+      [dayId]: day,
+    };
+
+    const newState = {
+      ...state,
+      days,
+    };
+
+    //axios request??
+
+    setState(newState);
   }
 
   useEffect(() => {

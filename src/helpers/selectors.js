@@ -1,4 +1,7 @@
 // given the days arrays as a piece of state and a particular day as a
+
+import { addParameters } from "@storybook/react/dist/client/preview";
+
 // query, return the appointments data for that day
 const generateAppointmentData = (state, day) => {
   // makes an array of the names of the days in state to check
@@ -73,6 +76,17 @@ const getInterview = (state, interviewObj) => {
   return null;
 };
 
+// takes the dailyAppointments array and filters it for
+// elements in which elm.interview is defined
+// it then returns the length of the array
+const countInterviews = (state, day) => {
+  const appointmentArr = getAppointmentsForDay(state, day);
+  const fullSpots = appointmentArr.filter((app) => app.interview).length;
+  const totalSpots = appointmentArr.length;
+
+  return totalSpots - fullSpots;
+};
+
 // called in App.js to render the appointments components from the API
 const getAppointmentsForDay = (state, day) => {
   const appointmentData = generateAppointmentData(state, day);
@@ -85,4 +99,5 @@ export {
   generateAppointmentData,
   getInterview,
   getInterviewersForDay,
+  countInterviews,
 };

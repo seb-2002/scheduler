@@ -6,6 +6,7 @@ import Appointment from "components/Appointment";
 import {
   getAppointmentsForDay,
   getInterviewersForDay,
+  countInterviews,
 } from "../helpers/selectors";
 
 import "components/Application.scss";
@@ -19,6 +20,7 @@ export default function Application(props) {
   } = useApplicationData();
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   return (
