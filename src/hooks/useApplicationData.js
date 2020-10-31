@@ -47,17 +47,28 @@ export default function useApplicationData() {
     return updatedDays;
   };
 
+  const updateSpots = (appointmentId, spots) => {
+    const thisDay = state.days.find((dayEntry) =>
+      dayEntry.appointments.includes(appointmentId)
+    );
+
+    const updatedDay = {
+      ...thisDay,
+      spots,
+    };
+
+    const updatedDays = state.days.map((day) => {
+      if (day.id === updatedDay.id) {
+        return updatedDay;
+      } else {
+        return day;
+      }
+    });
+
+    return updatedDays;
+  };
+
   function bookInterview(id, interview) {
-    // const appointment = {
-    //   ...state.appointments[id],
-    //   interview,
-    // };
-
-    // const appointments = {
-    //   ...state.appointments,
-    //   [id]: appointment,
-    // };
-
     const newState = {
       ...state,
       appointments: updateAppointment(id, interview),
@@ -96,8 +107,10 @@ export default function useApplicationData() {
     return deleteData;
   }
 
-  const remainingSpots = countInterviews(state, state.day);
-  console.log(remainingSpots);
+  // not being used for the moment ... can I improve
+  // the functionality of updateDays so that
+  // it counts the remaining spots, rather than
+  // simply incrementing or decrementing?
 
   useEffect(() => {
     Promise.all([
