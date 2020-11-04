@@ -26,11 +26,11 @@ npm start
 
 Then you're good to go! The homepage is pretty self-explanatory:
 
-![root directory screenshot](url)
+![root directory screenshot](https://github.com/seb-2002/scheduler/blob/master/public/images/scheduler_home_screenshot.png?raw=true)
 
-Click on one of the add buttons to access the appointment creation form.
+Click on one of the add buttons to access the appointment creation form. To select an interviewer from the list, just click on their image.
 
-![appointment form screenshot](url)
+![appointment form screenshot](https://github.com/seb-2002/scheduler/blob/master/public/images/scheduler_form_screenshot.png?raw=true)
 
 ## Resetting the Database
 
