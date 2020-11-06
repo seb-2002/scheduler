@@ -93,6 +93,16 @@ const getAppointmentsForDay = (state, day) => {
   return addInterviewerData(state, appointmentData);
 };
 
+const getAppointmentById = (state, id) => {
+  const { appointments } = state;
+  for (const appointment in appointments) {
+    if (appointments[appointment].id === id) {
+      return appointments[appointment];
+    }
+  }
+  return null;
+};
+
 export {
   getAppointmentsForDay,
   addInterviewerData,
@@ -100,4 +110,5 @@ export {
   getInterview,
   getInterviewersForDay,
   countInterviews,
+  getAppointmentById,
 };

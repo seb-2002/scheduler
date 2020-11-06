@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { countInterviews } from "../helpers/selectors";
+import { countInterviews, getAppointmentById } from "../helpers/selectors";
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -69,11 +69,22 @@ export default function useApplicationData() {
   };
 
   function bookInterview(id, interview) {
-    const newState = {
-      ...state,
-      appointments: updateAppointment(id, interview),
-      days: updateDays(id, -1),
-    };
+    let newState = {};
+
+    const thisAppointment = getAppointmentById(state, id);
+
+    if (thisAppointment && thisAppointment.interview) {
+      newState = {
+        ...state,
+        appointments: updateAppointment(id, interview),
+      };
+    } else if (thisAppointment) {
+      newState = {
+        ...state,
+        appointments: updateAppointment(id, interview),
+        days: updateDays(id, -1),
+      };
+    } else return;
 
     const putData = axios.put(`http://localhost:8001/api/appointments/${id}`, {
       interview,
