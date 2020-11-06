@@ -32,11 +32,16 @@ export default function Appointment(props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
 
+  // useVisualMode is a custom hook which stores the mode state and
+  // gives us methods for transitioning as well as going
+  // back in the history
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
+  // runs when an appointment is created or edited
   function save(name, interviewer) {
     transition(SAVE, true);
-
+    // checks to make sure there is enough information
+    // given
     if (interviewer && name) {
       const interview = {
         student: name,
@@ -50,16 +55,19 @@ export default function Appointment(props) {
           console.log(err);
         });
     } else {
+      // if there isn't enough info, it simply brings you
+      // back to the create mode
       setTimeout(() => {
         transition(CREATE);
       }, 1000);
     }
   }
 
+  // handles the deletion of an appointment
   function del(id) {
     transition(DELETE, true);
 
-    cancelInterview(id, null)
+    cancelInterview(id)
       .then((res) => transition(EMPTY))
       .catch((err) => {
         transition(ERROR_DELETE, true);
@@ -67,6 +75,7 @@ export default function Appointment(props) {
       });
   }
 
+  // returns a different component depending on the mode state
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={time} />
